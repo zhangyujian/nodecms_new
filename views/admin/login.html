@@ -1,0 +1,40 @@
+<%= include common/header.html %>
+<header class="navbar navbar-inverse navbar-fixed-top" role="banner">
+    <div class="container">
+        <div class="navbar-header">
+            <button class="navbar-toggle" type="button" data-toggle="collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            </button>
+            <a href="../" class="navbar-brand">NodeCMS</a>
+        </div>
+        <nav class="collapse navbar-collapse" role="navigation">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="../about">关于</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>
+<div class="container docs-container">
+    <% if( message != "" ){ %>
+    <div class="alert alert-danger alert-dismissable">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <strong><%= message %></strong>
+    </div>
+    <% } %>
+    <form class="form-signin" action="/admin/login.html" method="post" accept-charset="utf-8">
+        <h2 class="form-signin-heading">请登录</h2>
+        <input type="email" class="form-control" name="username" placeholder="邮箱" required="required">
+        <input type="password" class="form-control" name="password" placeholder="密码" required="required">
+        <label class="checkbox">
+            <input type="checkbox" value="remember-me"> 记住
+        </label>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
+    </form>
+</div>
+
+<%= include common/footer.html %>

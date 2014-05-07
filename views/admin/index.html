@@ -1,0 +1,41 @@
+<%= include common/header.html %>
+<%= include common/nav.html %>
+<div class="container docs-container">
+	<div class="row">
+		<div class="col-md-2">
+			<div class="list-group">
+				<a href="#" class="active list-group-item">面板</a>
+				<a href="#" class="list-group-item">文章管理</a>
+				<a href="#" class="list-group-item">产品管理</a>
+				<a href="#" class="list-group-item">用户管理</a>
+				<a href="#" class="list-group-item">数据管理</a>
+			</div>
+		</div>
+		<div class="col-md-10">
+			<div class="page-header docs-page-header">
+			  	<h2>Example page header <small>Subtext for header</small></h2>
+			  	<a class="docs-page-header-add" href=""><span class="glyphicon glyphicon-plus-sign"></span>添加</a>
+			</div>
+			<table class="table table-bordered table-hover">
+				<tr class="active">
+					<th width="50"></th>
+					<th>邮箱</th>
+					<th>用户名</th>
+					<th width="50"></th>
+				</tr>
+				<% tables.forEach( function( table ){ %>
+				    <tr>
+				    	<td><input type="checkbox" /></td>
+				    	<td><%= table.email %></td>
+				    	<td><%= table.username  %></td>
+				    	<td>
+				    		<a href="#" title="编辑"><span class="glyphicon glyphicon-edit"></span></a>
+				    		<a href="#" title="删除"><span class="glyphicon glyphicon-remove"></span></a>
+				    	</td>
+				    </tr>
+				<% }); %>
+			</table>
+		</div>
+	</div>
+</div>
+<%= include common/footer.html %>

@@ -1,0 +1,12 @@
+<%= include common/header.html %>
+
+<table class="table">
+<% tables.forEach( function( table ){ %>
+    <tr>
+      <td><%= table.email %></td>
+      <td><%= table.username  %></td>
+    </tr>
+<% }); %>
+</table>
+
+<%= include common/footer.html %>

@@ -1,0 +1,16 @@
+{
+  "name": "nodecms",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "express": "3.1.0",
+    "ejs": "*",
+    "buffer-concatz": "*",
+    "request": "*",
+    "stylus": "*",
+    "markdown": "*",
+    "mysql": "*",
+    "connect-flash": "*",
+    "nodemailer": "*"
+  }
+}
