@@ -10,11 +10,15 @@ module.exports = function(app){
 	// Admin Routes
 	app.get('/admin', admin.index);
 	
+	app.post('/admin/adduser',admin.adduser);
+	app.get('/admin/deluser/:id',admin.deluser);
+	app.get('/admin/edituser/:id',admin.edituser);
+
 	app.get('/admin/login.html', admin.login);
 	app.post('/admin/login.html',admin.login);
 
 	app.get('*', function(req, res){
-	    res.render('404', {
+	    res.render('admin/404', {
 	        title: '404'
 	    })
 	});

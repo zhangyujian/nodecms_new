@@ -13,24 +13,49 @@
 		</div>
 		<div class="col-md-10">
 			<div class="page-header docs-page-header">
-			  	<h2>Example page header <small>Subtext for header</small></h2>
-			  	<a class="docs-page-header-add" href=""><span class="glyphicon glyphicon-plus-sign"></span>添加</a>
+			  	<h2>用户管理</h2>
+			  	<a class="J_addBtn docs-page-header-add" href="javascript:;"><span class="glyphicon glyphicon-chevron-up"></span>添加</a>
+			</div>
+			<% if( message != "" ){ %>
+		    <div class="alert alert-warning alert-dismissable">
+		        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		        <strong><%= message %></strong>
+		    </div>
+		    <% } %>
+			<div class="J_addCon well">
+				<form action="/admin/adduser" method="post" accept-charset="utf-8">
+					<div class="form-group">
+						<label for="newemail">请输入邮箱</label>
+						<input type="email" class="form-control" id="newemail" name="newemail" placeholder="请输入邮箱" required="required">
+					</div>
+					<div class="form-group">
+						<label for="newusername">请输入用户名</label>
+						<input type="username" class="form-control" id="newusername" name="newusername" placeholder="请输入用户名" required="required">
+					</div>
+					<div class="form-group">
+						<label for="newpassword">请输入密码</label>
+						<input type="password" class="form-control" id="newpassword" name="newpassword" required="required" placeholder="请输入密码">
+					</div>
+					<button type="submit" class="btn btn-default">添加</button>
+				</form>
 			</div>
 			<table class="table table-bordered table-hover">
 				<tr class="active">
 					<th width="50"></th>
+					<th width="50">ID</th>
 					<th>邮箱</th>
 					<th>用户名</th>
-					<th width="50"></th>
+					<th width="50">操作</th>
 				</tr>
 				<% tables.forEach( function( table ){ %>
 				    <tr>
 				    	<td><input type="checkbox" /></td>
-				    	<td><%= table.email %></td>
-				    	<td><%= table.username  %></td>
+				    	<td class="uid"><%= table.id %></td>
+				    	<td class="uemail"><%= table.email %></td>
+				    	<td class="uname"><%= table.username  %></td>
 				    	<td>
-				    		<a href="#" title="编辑"><span class="glyphicon glyphicon-edit"></span></a>
-				    		<a href="#" title="删除"><span class="glyphicon glyphicon-remove"></span></a>
+				    		<a href="/admin/edituser/<%= table.id  %>" title="编辑"><span class="glyphicon glyphicon-edit"></span></a>
+				    		<a href="/admin/deluser/<%= table.id  %>" title="删除"><span class="glyphicon glyphicon-remove"></span></a>
 				    	</td>
 				    </tr>
 				<% }); %>

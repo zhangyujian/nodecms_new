@@ -4,6 +4,9 @@ body{  }
 .docs-page-header{ position: relative; }
 .docs-page-header-add{ position: absolute; right: 10px; top: 17px; }
 
+/* js */
+.J_addCon{ display: none; }
+.J_editCon{ display: none; }
 /* login */
 .form-signin {
   max-width: 330px;

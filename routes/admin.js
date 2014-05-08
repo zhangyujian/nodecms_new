@@ -25,22 +25,91 @@ var connection = mysql.createConnection({
 connection.query('USE '+TEST_DATABASE);
 
 exports.index = function(req, res){
-    sess.session(req,res);
-    connection.query(
-        'SELECT * FROM user',
-        function selectCb(err, results, fields) {
-            if (err) {
-                throw err;
+    sess.session(req, res, function(){
+        connection.query(
+            'SELECT * FROM user order by id desc',
+            function selectCb(err, results, fields) {
+                if (err) {
+                    throw err;
+                }
+                res.render('admin/index', {
+                    title: "欢迎登录NODECMS后台系统",
+                    tables:results,
+                    user: req.session.user,
+                    message: req.flash('message')
+                });
             }
-            res.render('admin/index', {
-                title: "欢迎登录NODECMS后台系统",
-                tables:results,
-                user: req.session.user
-            });
-        }
-    );
-    
+        );
+    });
 };
+
+// add user
+exports.adduser = function(req, res){
+    sess.session(req, res, function(){
+        connection.query(
+            'SELECT * FROM user WHERE email ='+ connection.escape(req.body.newemail) ,
+            function selectCb(err, results, fields) {
+                if (err) {
+                    throw err;
+                }
+                if( results !="" ){
+                    req.flash('message','邮箱已被注册');
+                }else{
+                    var sql = "INSERT INTO user SET email=?, username=?, password=?",
+                        values = [ req.body.newemail, req.body.newusername, md5(req.body.newpassword)];
+                    connection.query(sql, values, 
+                        function(err, results){
+                            if (err) {
+                                throw err;
+                            }
+                        }
+                    );
+                    req.flash('message','新用户添加成功！');
+                }
+                res.redirect('/admin');
+            }
+        );
+    });
+};
+
+//delete user
+exports.deluser = function(req, res){
+    sess.session(req, res, function(){
+        var sql = "DELETE FROM user WHERE id =?",
+            values = connection.escape(parseInt(req.params.id));
+        connection.query(sql, values, 
+            function selectCb(err, results) {
+                if (err) {
+                    console.log(err);
+                }
+            }
+            //req.flash('message','删除成功');//不支持get方式？
+        );
+        res.redirect('/admin');
+    });
+}
+
+//edit user
+exports.edituser = function(req, res){
+    sess.session(req, res, function(){
+        var sql = "SELECT * FROM user WHERE id =?",
+            values = connection.escape(parseInt(req.params.id));
+        connection.query(sql, values, 
+            function selectCb(err, results) {
+                if (err) {
+                    console.log(err);
+                }
+                console.log(results);
+                res.render('admin/edituser', {
+                    title: "编辑用户",
+                    table: results[0],
+                    user: req.session.user,
+                    message: req.flash('message')
+                });
+            }
+        );
+    });
+}
 
 // admin login
 exports.login = function(req, res){
@@ -48,7 +117,6 @@ exports.login = function(req, res){
         if( req.session.user ){
             res.redirect('/admin');
         }else{
-            //console.log(req.flash('message'));
             res.render('admin/login', {
                 title: "登录",
                 message: req.flash('message')
@@ -57,15 +125,14 @@ exports.login = function(req, res){
     }
     else if( req.method === 'POST' ){
         connection.query(
-            'SELECT * FROM user WHERE email ='+ connection.escape(req.body.username) ,
+            'SELECT * FROM user WHERE email ='+ connection.escape(req.body.email) ,
             function selectCb(err, results, fields) {
                 if (err) {
                     throw err;
                 }
-                console.log(results);
                 if( results =="" ){
                     //用户不存在
-                    req.flash('message','您输入的用户名不存在');
+                    req.flash('message','您输入的用户不存在');
                     res.redirect('/admin/login.html');
                 }
                 else if(results[0].password != req.body.password){
