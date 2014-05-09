@@ -82,10 +82,11 @@ exports.deluser = function(req, res){
                 if (err) {
                     console.log(err);
                 }
+                req.flash('message','删除成功');
+                res.redirect('/admin');
             }
-            //req.flash('message','删除成功');//不支持get方式？
         );
-        res.redirect('/admin');
+        
     });
 }
 
