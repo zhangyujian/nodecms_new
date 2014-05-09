@@ -111,6 +111,23 @@ exports.edituser = function(req, res){
     });
 }
 
+//update user
+exports.updateuser = function(req, res){
+    sess.session(req, res, function(){
+        //var uid = parseInt(req.params.id);
+        var sql = "UPDATE user SET username =?, email =?, password = ? WHERE id =?",
+            values = [ req.body.username, req.body.email, md5(req.body.password), connection.escape(parseInt(req.params.id))];
+        connection.query(sql, values, 
+            function selectCb(err, results) {
+                if (err) {
+                    console.log(err);
+                }
+                res.redirect('/admin');
+            }
+        );
+    });
+}
+
 // admin login
 exports.login = function(req, res){
     if( req.method === 'GET' ){
@@ -133,12 +150,12 @@ exports.login = function(req, res){
                 if( results =="" ){
                     //用户不存在
                     req.flash('message','您输入的用户不存在');
-                    res.redirect('/admin/login.html');
+                    res.redirect('/admin/login');
                 }
-                else if(results[0].password != req.body.password){
+                else if(results[0].password != md5(req.body.password)){
                     //密码错误
                     req.flash('message','您输入的密码有误!');
-                    res.redirect('/admin/login.html');
+                    res.redirect('/admin/login');
                 }
                 else{
                     req.session.user = results[0];
@@ -148,3 +165,11 @@ exports.login = function(req, res){
         );
     }
 };
+
+// admin logout
+exports.logout = function(req, res){
+    sess.session(req, res, function(){
+        req.session.user = false;
+        res.redirect('/admin');
+    });
+}

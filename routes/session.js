@@ -6,7 +6,7 @@ exports.session = function(req,res,callback){//登录，保存session
     }else{
         req.session.cookie.expires = false;
         //req.session.cookie.maxAge = false;
-        res.redirect('/admin/login.html');
+        res.redirect('/admin/login');
     }
 };
 
