@@ -26,14 +26,59 @@ connection.query('USE '+TEST_DATABASE);
 
 exports.index = function(req, res){
     sess.session(req, res, function(){
+        var num = 0,
+            data = {};
+        function render(){
+            res.render('admin/index', {
+                title: "欢迎登录NODECMS后台系统",
+                data: data,
+                user: req.session.user,
+                message: req.flash('message')
+            });
+        }
+
+
+
+        connection.query(
+            'SELECT SUM(DATA_LENGTH)+SUM(INDEX_LENGTH) FROM information_schema.TABLES WHERE TABLE_SCHEMA="'+TEST_DATABASE+'"',//获取数据库大小
+            function selectCb(err, results) {
+                if (err) {
+                    throw err;
+                }
+                data.size = results[0]["SUM(DATA_LENGTH)+SUM(INDEX_LENGTH)"]/(1024*1024);
+
+                connection.query(
+                    'SELECT * FROM user',//用户数量
+                    function selectCb(err, results) {
+                        if (err) {
+                            throw err;
+                        }
+                        data.num = results.length;
+
+                        render();
+
+                    }
+                );
+
+            }
+        );
+
+        
+
+    });
+};
+
+//user list
+exports.user = function(req, res){
+    sess.session(req, res, function(){
         connection.query(
             'SELECT * FROM user order by id desc',
             function selectCb(err, results, fields) {
                 if (err) {
                     throw err;
                 }
-                res.render('admin/index', {
-                    title: "欢迎登录NODECMS后台系统",
+                res.render('admin/user', {
+                    title: "用户管理",
                     tables:results,
                     user: req.session.user,
                     message: req.flash('message')
@@ -66,7 +111,7 @@ exports.adduser = function(req, res){
                     );
                     req.flash('message','新用户添加成功！');
                 }
-                res.redirect('/admin');
+                res.redirect('/admin/user');
             }
         );
     });
@@ -83,7 +128,7 @@ exports.deluser = function(req, res){
                     console.log(err);
                 }
                 req.flash('message','删除成功');
-                res.redirect('/admin');
+                res.redirect('/admin/user');
             }
         );
         
@@ -123,7 +168,8 @@ exports.updateuser = function(req, res){
                 if (err) {
                     console.log(err);
                 }
-                res.redirect('/admin');
+                req.flash('message','修改成功');
+                res.redirect('/admin/user');
             }
         );
     });

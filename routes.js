@@ -9,6 +9,7 @@ module.exports = function(app){
 
 	// Admin Routes
 	app.get('/admin', admin.index);
+	app.get('/admin/user', admin.user);
 	
 	app.post('/admin/adduser',admin.adduser);
 	app.get('/admin/deluser/:id',admin.deluser);
