@@ -1,3 +1,12 @@
+var crypto = require('crypto');
+//md5
+exports.md5 = function(str){
+	var md5sum = crypto.createHash('md5');
+    md5sum.update(str);
+    str = md5sum.digest('hex');
+    return str;
+};
+//session
 exports.session = function(req,res,callback){//登录，保存session
 	if (req.session.user) {
         req.session.cookie.expires = new Date(Date.now() + 1000 * 60 * 30);
@@ -9,4 +18,3 @@ exports.session = function(req,res,callback){//登录，保存session
         res.redirect('/admin/login');
     }
 };
-

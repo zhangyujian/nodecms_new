@@ -1,8 +1,8 @@
-var fs = require('fs');
-var config = require('../config').config;
-var mysql = require('mysql');
-var TEST_DATABASE = 'nodecms';
-require('buffer-concat');
+var mysql         = require('mysql')
+  , TEST_DATABASE = 'nodecms'
+  , md5           = require('./common').md5
+  , session       = require('./common').session
+  , bc            = require('buffer-concat');
 
 
 var connection = mysql.createConnection({

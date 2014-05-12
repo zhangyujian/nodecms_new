@@ -1,6 +1,9 @@
 // JavaScript Document
 var index      = require('./routes/index')
-  , admin      = require('./routes/admin');
+  , admin      = require('./routes/admin')
+  , user       = require('./routes/user')
+  , article    = require('./routes/article');
+
 module.exports = function(app){
 	
 	// Routes
@@ -9,12 +12,18 @@ module.exports = function(app){
 
 	// Admin Routes
 	app.get('/admin', admin.index);
-	app.get('/admin/user', admin.user);
-	
-	app.post('/admin/adduser',admin.adduser);
-	app.get('/admin/deluser/:id',admin.deluser);
-	app.get('/admin/edituser/:id',admin.edituser);
-	app.post('/admin/updateuser/:id',admin.updateuser);
+		//user
+	app.get('/admin/user', user.user);
+	app.post('/admin/adduser',user.adduser);
+	app.get('/admin/deluser/:id',user.deluser);
+	app.get('/admin/edituser/:id',user.edituser);
+	app.post('/admin/updateuser/:id',user.updateuser);
+		//article
+	app.get('/admin/article', article.article);
+	//app.post('/admin/addarticle',article.addarticle);
+	//app.get('/admin/delarticle/:id',article.delarticle);
+	//app.get('/admin/editarticle/:id',article.editarticle);
+	//app.post('/admin/updatearticle/:id',admin.updatearticle);
 
 	//Admin Login Routes
 	app.get('/admin/login', admin.login);

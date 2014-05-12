@@ -1,31 +1,21 @@
-var fs            = require('fs')
-  , config        = require('../config').config
-  , crypto        = require('crypto')
-  , mysql         = require('mysql')
+var mysql         = require('mysql')
   , TEST_DATABASE = 'nodecms'
-  , sess          = require('./session');
-
-require('buffer-concat');
-
-//创建md5方法
-function md5(str) {
-    var md5sum = crypto.createHash('md5');
-    md5sum.update(str);
-    str = md5sum.digest('hex');
-    return str;
-}
+  , md5           = require('./common').md5
+  , session       = require('./common').session
+  , bc            = require('buffer-concat');
 
 var connection = mysql.createConnection({
     host : 'localhost',
     port : 3306,
     user : 'root',
     password : 'root',
+    database : TEST_DATABASE,
 });
 
-connection.query('USE '+TEST_DATABASE);
+connection.connect();
 
 exports.index = function(req, res){
-    sess.session(req, res, function(){
+    session(req, res, function(){
         var num = 0,
             data = {};
         function render(){
@@ -68,113 +58,6 @@ exports.index = function(req, res){
     });
 };
 
-//user list
-exports.user = function(req, res){
-    sess.session(req, res, function(){
-        connection.query(
-            'SELECT * FROM user order by id desc',
-            function selectCb(err, results, fields) {
-                if (err) {
-                    throw err;
-                }
-                res.render('admin/user', {
-                    title: "用户管理",
-                    tables:results,
-                    user: req.session.user,
-                    message: req.flash('message')
-                });
-            }
-        );
-    });
-};
-
-// add user
-exports.adduser = function(req, res){
-    sess.session(req, res, function(){
-        connection.query(
-            'SELECT * FROM user WHERE email ='+ connection.escape(req.body.newemail) ,
-            function selectCb(err, results, fields) {
-                if (err) {
-                    throw err;
-                }
-                if( results !="" ){
-                    req.flash('message','邮箱已被注册');
-                }else{
-                    var sql = "INSERT INTO user SET email=?, username=?, password=?",
-                        values = [ req.body.newemail, req.body.newusername, md5(req.body.newpassword)];
-                    connection.query(sql, values, 
-                        function(err, results){
-                            if (err) {
-                                throw err;
-                            }
-                        }
-                    );
-                    req.flash('message','新用户添加成功！');
-                }
-                res.redirect('/admin/user');
-            }
-        );
-    });
-};
-
-//delete user
-exports.deluser = function(req, res){
-    sess.session(req, res, function(){
-        var sql = "DELETE FROM user WHERE id =?",
-            values = connection.escape(parseInt(req.params.id));
-        connection.query(sql, values, 
-            function selectCb(err, results) {
-                if (err) {
-                    console.log(err);
-                }
-                req.flash('message','删除成功');
-                res.redirect('/admin/user');
-            }
-        );
-        
-    });
-}
-
-//edit user
-exports.edituser = function(req, res){
-    sess.session(req, res, function(){
-        var sql = "SELECT * FROM user WHERE id =?",
-            values = connection.escape(parseInt(req.params.id));
-        connection.query(sql, values, 
-            function selectCb(err, results) {
-                if (err) {
-                    console.log(err);
-                }
-                console.log(results);
-                res.render('admin/edituser', {
-                    title: "编辑用户",
-                    table: results[0],
-                    user: req.session.user,
-                    message: req.flash('message')
-                });
-            }
-        );
-    });
-}
-
-//update user
-exports.updateuser = function(req, res){
-    sess.session(req, res, function(){
-        //var uid = parseInt(req.params.id);
-        var sql = "UPDATE user SET username =?, email =?, password = ? WHERE id =?",
-            values = [ req.body.username, req.body.email, md5(req.body.password), connection.escape(parseInt(req.params.id))];
-        connection.query(sql, values, 
-            function selectCb(err, results) {
-                if (err) {
-                    console.log(err);
-                }
-                req.flash('message','修改成功');
-                res.redirect('/admin/user');
-            }
-        );
-    });
-}
-
 // admin login
 exports.login = function(req, res){
     if( req.method === 'GET' ){
@@ -215,7 +98,7 @@ exports.login = function(req, res){
 
 // admin logout
 exports.logout = function(req, res){
-    sess.session(req, res, function(){
+    session(req, res, function(){
         req.session.user = false;
         res.redirect('/admin');
     });
