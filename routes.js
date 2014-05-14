@@ -2,7 +2,7 @@
 var index      = require('./routes/index')
   , admin      = require('./routes/admin')
   , user       = require('./routes/user')
-  , article    = require('./routes/article');
+  , art       = require('./routes/post');
 
 module.exports = function(app){
 	
@@ -19,7 +19,7 @@ module.exports = function(app){
 	app.get('/admin/edituser/:id',user.edituser);
 	app.post('/admin/updateuser/:id',user.updateuser);
 		//article
-	app.get('/admin/article', article.article);
+	app.get('/admin/post', art.post);
 	//app.post('/admin/addarticle',article.addarticle);
 	//app.get('/admin/delarticle/:id',article.delarticle);
 	//app.get('/admin/editarticle/:id',article.editarticle);

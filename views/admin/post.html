@@ -1,0 +1,99 @@
+<%= include common/header.html %>
+<%= include common/nav.html %>
+<div class="container docs-container">
+	<div class="row">
+		<%= include common/side.html %>
+		<div class="col-md-10">
+			<div class="page-header docs-page-header">
+			  	<h2>文章管理</h2>
+			  	<a class="J_addBtn docs-page-header-add" href="javascript:;"><span class="glyphicon glyphicon-chevron-up"></span>添加</a>
+			</div>
+			<% if( message != "" ){ %>
+		    <div class="alert alert-warning alert-dismissable">
+		        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		        <strong><%= message %></strong>
+		    </div>
+		    <% } %>
+			<div class="J_addCon">
+				<div class="row">
+					<div class="col-md-10">
+						<div class="well">
+							<form action="/admin/adduser" method="post" accept-charset="utf-8">
+								<div class="form-group">
+									<label for="title">标题</label>
+									<input type="text" class="form-control" id="title" name="title" placeholder="标题" required="required">
+								</div>
+								<div class="form-group">
+									<label for="content">内容</label>
+									<textarea style="min-height:200px;" class="form-control" id="content" name="content"></textarea>
+								</div>
+								<button type="submit" class="btn btn-default">发布</button>
+							</form>
+						</div>
+					</div>
+					<div class="col-md-2">
+						<div class="panel panel-default">
+							<div class="panel-heading">发布</div>
+							<div class="panel-body">
+								<button type="button" class="btn btn-default">保存草稿</button>
+								<button type="button" class="btn btn-default">预览</button>
+								<div>
+									<label>
+										公开：
+									</label>
+									<label>
+										<input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
+										是
+									</label>
+									<label>
+										<input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
+										否
+									</label>
+								</div>
+							</div>
+						</div>
+						<div class="panel panel-default">
+							<div class="panel-heading">分类</div>
+							<div class="panel-body">
+								<div class="checkbox">
+									<label>
+										<input type="checkbox" value="">
+										分类1
+									</label>
+								</div>
+								<div class="checkbox">
+									<label>
+										<input type="checkbox" value="">
+										分类2
+									</label>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<table class="table table-bordered table-hover">
+				<tr class="active">
+					<th width="50"></th>
+					<th width="50">ID</th>
+					<th>标题</th>
+					<th>发布时间</th>
+					<th width="50">操作</th>
+				</tr>
+				<% tables.forEach( function( table ){ %>
+				    <tr>
+				    	<td><input type="checkbox" /></td>
+				    	<td><%= table.id %></td>
+				    	<td><%= table.title %></td>
+				    	<td><%= table.date  %></td>
+				    	<td>
+				    		<a href="/admin/edituser/<%= table.id  %>" title="编辑"><span class="glyphicon glyphicon-edit"></span></a>
+				    		<a href="/admin/deluser/<%= table.id  %>" title="删除"><span class="glyphicon glyphicon-remove"></span></a>
+				    	</td>
+				    </tr>
+				<% }); %>
+			</table>
+		</div>
+	</div>
+</div>
+<%= include common/footer.html %>
