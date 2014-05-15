@@ -2,7 +2,8 @@ var mysql         = require('mysql')
   , TEST_DATABASE = 'nodecms'
   , md5           = require('./common').md5
   , session       = require('./common').session
-  , bc            = require('buffer-concat');
+  , bc            = require('buffer-concat')
+  , markdown      = require('markdown').markdown;
 
 var connection = mysql.createConnection({
     host : 'localhost',

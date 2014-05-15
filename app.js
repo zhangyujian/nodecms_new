@@ -44,5 +44,5 @@ app.locals({
 });
 
 app.listen(config.port, function(){
-  console.log("Express server listening on port 3000");
+  console.log("Express server listening on port " + config.port);
 });

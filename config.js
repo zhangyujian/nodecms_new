@@ -7,7 +7,7 @@ exports.config = {
 	keywords: 'NODECMS,文章管理系统,开源管理系统,NODEJS',
 	favicon: '/public/favicon.ico',
 	//Service
-	port: 3000,
+	port: 4000,
 	session_secret: 'NODECMS',
     datapath: path.join(__dirname, '/public/data/img')
 };

@@ -1,5 +1,15 @@
 <%= include common/header.html %>
 <%= include common/nav.html %>
+<script src="/js/markdown.js"></script>
+<script>
+	$(function(){
+		$("#content").keyup(function(){
+			var html = $(this).val();
+			console.log(html);
+			$(".docs-markdown-view").html(Markdown(html));
+		});
+	});
+</script>
 <div class="container docs-container">
 	<div class="row">
 		<%= include common/side.html %>
@@ -10,17 +20,25 @@
 					<input type="text" class="form-control" id="title" name="title" placeholder="在此处输入标题" required="required">
 				</div>
 				<div class="form-group">
-					<textarea name="content" class="form-control" id="content" ></textarea>
+					<button type="button" class="btn btn-primary btn-xs"> 插入图片 </button>
+				</div>
+				<div class="form-group">
+					<textarea name="content" class="form-control" id="content" style="min-height: 300px;">请使用markdown语法书写正文</textarea>
 				</div>
 			</form>
+			<div class="panel panel-default">
+				<div class="panel-heading">实时预览</div>
+				<div class="panel-body docs-markdown-view">
+					
+				</div>
+			</div>
 		</div>
 
 		<div class="col-md-2 docs-side-bar">
 			<div class="panel panel-default">
 				<div class="panel-heading">发布</div>
 				<div class="panel-body">
-					<button type="button" class="btn btn-default">保存草稿</button>
-					<button type="button" class="btn btn-default">预览</button>
+					
 					<div>
 						<label>
 							公开：
@@ -37,6 +55,7 @@
 					
 				</div>
 				<div class="panel-footer docs-panel-footer">
+					<button type="button" class="btn btn-default">保存草稿</button>
 					<button type="submit" class="btn btn-primary">发布</button>
 				</div>
 			</div>

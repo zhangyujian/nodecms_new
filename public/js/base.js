@@ -12,3 +12,36 @@ $(function(){
 		return false;
 	});
 });
+
+function markUp(text, raw){
+	var DivElement = document.getElementById("textdisplay");
+	var RawElement = document.getElementById("rawdisplay");
+
+	if (!raw) {
+
+	DivElement.setAttribute("style", "display:inline;");
+	RawElement.setAttribute("style", "display:none");
+	DivElement.innerHTML = Markdown(text);
+
+	} else {
+
+	DivElement.setAttribute("style", "display:none;");
+	RawElement.setAttribute("style", "display:inline; margin-top: 20px;");
+	document.getElementById("rawoutput").value = Markdown(text);
+  
+  }
+  
+}
+
+function debug(string, marker) {
+
+	if (!marker) {
+	marker = "";
+	}
+
+	DebugElement = document.getElementById("debugdisplay");
+
+	DebugElement.setAttribute("style", "display:inline");
+	document.getElementById("debugoutput").value += "\n"+marker+": \n\n"+string+"\n\n";
+
+}
