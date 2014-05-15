@@ -20,6 +20,7 @@ module.exports = function(app){
 	app.post('/admin/updateuser/:id',user.updateuser);
 		//article
 	app.get('/admin/post', art.post);
+	app.get('/admin/newPost', art.newPost);
 	//app.post('/admin/addarticle',article.addarticle);
 	//app.get('/admin/delarticle/:id',article.delarticle);
 	//app.get('/admin/editarticle/:id',article.editarticle);

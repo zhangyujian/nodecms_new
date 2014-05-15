@@ -1,9 +1,11 @@
-body{  }
+body{ background: #f2f2f2; }
 .container{ width: 100%; }
 .docs-container{ padding-top: 70px; }
 .docs-page-header{ position: relative; }
 .docs-page-header-add{ position: absolute; right: 10px; top: 17px; }
-
+.docs-panel-footer{ text-align: right; }
+.docs-side-bar{ padding-top: 62px; }
+table{ background: #fff; }
 /* js */
 .J_addCon{ display: none; }
 .J_editCon{ display: none; }
@@ -42,3 +44,44 @@ body{  }
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
+
+
+#editor {
+  max-height: 250px;
+  height: 250px;
+  background-color: white;
+  border-collapse: separate; 
+  border: 1px solid rgb(204, 204, 204); 
+  padding: 4px; 
+  box-sizing: content-box; 
+  -webkit-box-shadow: rgba(0, 0, 0, 0.0745098) 0px 1px 1px 0px inset; 
+  box-shadow: rgba(0, 0, 0, 0.0745098) 0px 1px 1px 0px inset;
+  border-top-right-radius: 3px; border-bottom-right-radius: 3px;
+  border-bottom-left-radius: 3px; border-top-left-radius: 3px;
+  overflow: scroll;
+  outline: none;
+}
+#voiceBtn {
+  width: 20px;
+  color: transparent;
+  background-color: transparent;
+  transform: scale(2.0, 2.0);
+  -webkit-transform: scale(2.0, 2.0);
+  -moz-transform: scale(2.0, 2.0);
+  border: transparent;
+  cursor: pointer;
+  box-shadow: none;
+  -webkit-box-shadow: none;
+}
+
+div[data-role="editor-toolbar"] {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.dropdown-menu a {
+  cursor: pointer;
+}
+.btn-toolbar{ margin-bottom: 10px; }

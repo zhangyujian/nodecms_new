@@ -33,3 +33,28 @@ exports.post = function(req, res){
         );
     });
 };
+
+exports.newPost = function(req, res){
+    session(req, res, function(){
+        if( req.method === 'GET' ){
+            res.render('admin/newPost', {
+                title: "添加新文章",
+                user: req.session.user,
+                message: req.flash('message')
+            });
+        }
+        else if( req.method === 'POST' ){
+            var sql = "INSERT INTO post SET email=?, username=?, password=?",
+                values = [ req.body.email, req.body.username, md5(req.body.password)];
+            connection.query(sql, values, 
+                function(err, results){
+                    if (err) {
+                        throw err;
+                    }
+                    req.flash('message','新用户添加成功！');
+                    res.redirect('/admin/post');
+                }
+            );
+        }
+    });
+};

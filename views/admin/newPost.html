@@ -1,0 +1,64 @@
+<%= include common/header.html %>
+<%= include common/nav.html %>
+<div class="container docs-container">
+	<div class="row">
+		<%= include common/side.html %>
+		<div class="col-md-8">
+			<h2>添加新文章</h2>
+			<form action="/admin/adduser" method="post" accept-charset="utf-8">
+				<div class="form-group">
+					<input type="text" class="form-control" id="title" name="title" placeholder="在此处输入标题" required="required">
+				</div>
+				<div class="form-group">
+					<textarea name="content" class="form-control" id="content" ></textarea>
+				</div>
+			</form>
+		</div>
+
+		<div class="col-md-2 docs-side-bar">
+			<div class="panel panel-default">
+				<div class="panel-heading">发布</div>
+				<div class="panel-body">
+					<button type="button" class="btn btn-default">保存草稿</button>
+					<button type="button" class="btn btn-default">预览</button>
+					<div>
+						<label>
+							公开：
+						</label>
+						<label>
+							<input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
+							是
+						</label>
+						<label>
+							<input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
+							否
+						</label>
+					</div>
+					
+				</div>
+				<div class="panel-footer docs-panel-footer">
+					<button type="submit" class="btn btn-primary">发布</button>
+				</div>
+			</div>
+			<div class="panel panel-default">
+				<div class="panel-heading">分类</div>
+				<div class="panel-body">
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" value="">
+							分类1
+						</label>
+					</div>
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" value="">
+							分类2
+						</label>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</div>
+<%= include common/footer.html %>
