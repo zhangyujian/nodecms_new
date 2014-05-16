@@ -2,7 +2,8 @@
 var index      = require('./routes/index')
   , admin      = require('./routes/admin')
   , user       = require('./routes/user')
-  , art       = require('./routes/post');
+  , art        = require('./routes/post')
+  , upload	   = require('./routes/upload');
 
 module.exports = function(app){
 	
@@ -25,6 +26,8 @@ module.exports = function(app){
 	//app.get('/admin/delarticle/:id',article.delarticle);
 	//app.get('/admin/editarticle/:id',article.editarticle);
 	//app.post('/admin/updatearticle/:id',admin.updatearticle);
+
+	app.post('/admin/upload',upload.upload);
 
 	//Admin Login Routes
 	app.get('/admin/login', admin.login);

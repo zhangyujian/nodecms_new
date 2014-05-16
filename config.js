@@ -9,5 +9,5 @@ exports.config = {
 	//Service
 	port: 4000,
 	session_secret: 'NODECMS',
-    datapath: path.join(__dirname, '/public/data/img')
+    datapath: path.join(__dirname, '/upload')
 };
