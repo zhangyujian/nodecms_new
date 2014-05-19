@@ -1,0 +1,32 @@
+<%= include common/header.html %>
+<%= include common/nav.html %>
+<link href="/uploadify/uploadify.css" />
+<script src="/uploadify/jquery.uploadify.js"></script>
+<script>
+    $(function() {
+        $('#file_upload').uploadify({
+            'swf'     : '/uploadify/uploadify.swf',
+            'uploader' : '/admin/upload',
+            'formData':{},
+            'cancelImg':'/uploadify/uploadify-cancel.png',
+            'onUploadSuccess' : function(file, readname) {
+                var img='<img src="/upload/temp/'+ readname +'">';
+                $("#img_box").append(img);
+                $(".file_img").val(file.name);
+            }
+        });
+    });
+</script>
+<div class="container docs-container">
+    <div class="row">
+        <%= include common/side.html %>
+        <div class="col-md-10">
+            
+                <input class="file_img" type="text" name="file_img" />
+                <div id="img_box" class="img"></div>
+                <input id="file_upload" type="file" name="file_upload" />
+            
+        </div>
+    </div>
+</div>
+<%= include common/footer.html %>

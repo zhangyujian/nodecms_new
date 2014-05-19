@@ -27,6 +27,7 @@ module.exports = function(app){
 	//app.get('/admin/editarticle/:id',article.editarticle);
 	//app.post('/admin/updatearticle/:id',admin.updatearticle);
 
+	app.get('/admin/upload',upload.upload);
 	app.post('/admin/upload',upload.upload);
 
 	//Admin Login Routes
