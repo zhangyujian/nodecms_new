@@ -42,8 +42,18 @@ exports.upload = function (req, res) {
             
         }
         else if( req.method === 'POST' ){
+            var date = new Date();
+            var year = date.getFullYear();
+            var mon = date.getMonth();
+            var folderName = year+"-"+(mon+1);
+            var dirPath = "./public/upload/temp/"+folderName+"/";
+
+            if(!fs.existsSync(dirPath)){
+                fs.mkdirSync(dirPath);
+            }
+            
             var options = {
-                    uploadDir : './public/upload/temp',
+                    uploadDir : dirPath,
                     keepExtensions : false,
                     maxFilesSize: 204800
                 },
@@ -63,7 +73,7 @@ exports.upload = function (req, res) {
             
             form.parse(req, function(err, fields, files) {
                 if(done){
-                    req.flash('message','文件超过2M，请重新上传');
+                    req.flash('message','鏂囦欢瓒呰繃2M锛岃閲嶆柊涓婁紶');
                 }else{
                     req.flash('message','涓婁紶鎴愬姛');
                 }
