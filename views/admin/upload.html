@@ -1,6 +1,6 @@
 <%= include common/header.html %>
 <%= include common/nav.html %>
-<link href="/uploadify/uploadify.css" />
+<!--link href="/uploadify/uploadify.css" />
 <script src="/uploadify/jquery.uploadify.js"></script>
 <script>
     $(function() {
@@ -11,12 +11,15 @@
             'cancelImg':'/uploadify/uploadify-cancel.png',
             'onUploadSuccess' : function(file, readname) {
                 var img='<img src="/upload/temp/'+ readname +'">';
-                $("#img_box").append(img);
-                $(".file_img").val(file.name);
+                //$("#img_box").append(img);
+                //$(".file_img").val(file.name);
             }
         });
     });
-</script>
+</script-->
+<style>
+    .th_img{ width: 50px; }
+</style>
 <div class="container docs-container">
     <div class="row">
         <%= include common/side.html %>
@@ -27,12 +30,31 @@
                 <strong><%= message %></strong>
             </div>
             <% } %>
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <div id="img_box" class="img"></div>
-                    <input id="file_upload" type="file" name="file_upload" />
+            <form action="/admin/upload" class="form-inline" style="margin-bottom: 10px;" method="post" enctype="multipart/form-data" accept-charset="utf-8">
+                <div class="form-group">
+                    <input type="file" class="form-control" name="files" multiple="multiple">
                 </div>
-            </div>
+                <button type="submit" class="btn btn-info">上传</button>
+            </form>
+            <table class="table table-bordered table-hover">
+                <tr class="active">
+                    <th width="50"></th>
+                    <th>缩略图</th>
+                    <th>名称</th>
+                    <th width="50">操作</th>
+                </tr>
+                <% tables.forEach( function( table ){ %>
+                    <tr>
+                        <td><input type="checkbox" /></td>
+                        <td><img class="th_img" src="/upload/temp/<%= table %>" /></td>
+                        <td><%= table %></td>
+                        <td>
+                            <a href="/admin/edituser/<%= table  %>" title="编辑"><span class="glyphicon glyphicon-edit"></span></a>
+                            <a href="/admin/deluser/<%= table  %>" title="删除"><span class="glyphicon glyphicon-remove"></span></a>
+                        </td>
+                    </tr>
+                <% }); %>
+            </table>
             
         </div>
     </div>

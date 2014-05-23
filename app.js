@@ -22,9 +22,8 @@ app.configure(function(){
   app.use(express.logger('dev'));
   app.use(express.methodOverride());
   app.use(express.favicon(__dirname + config.favicon));//设置favicon.ico
-  //app.use(require('connect-multiparty')({uploadDir:__dirname+'/public/upload/temp'}));
-  app.use(express.urlencoded());
   app.use(express.json());
+  app.use(express.urlencoded());
   app.use(express.static(path.join(__dirname, 'public')));
   app.use(app.router);
 });
