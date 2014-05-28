@@ -42,6 +42,7 @@ exports.upload = function (req, res) {
             
         }
         else if( req.method === 'POST' ){
+            /****上传并穿件日期文件夹
             var date = new Date();
             var year = date.getFullYear();
             var mon = date.getMonth();
@@ -51,24 +52,24 @@ exports.upload = function (req, res) {
             if(!fs.existsSync(dirPath)){
                 fs.mkdirSync(dirPath);
             }
+            ************************/
             
             var options = {
-                    uploadDir : dirPath,
+                    uploadDir : "./public/upload/temp/",
                     keepExtensions : false,
-                    maxFilesSize: 204800
+                    maxFilesSize: 2*1024*1024
                 },
                 form = new multiparty.Form(options),
                 done = false;
             
             form.on('error', function(err) {
-                console.log(err);
                 done = true;
                 req.resume();
             });
             
             form.on('progress', function(bytesReceived, bytesExpected) {
                 var rate = ((bytesReceived / bytesExpected)*100) + "% uploaded";
-                console.log(rate);
+
             });
             
             form.parse(req, function(err, fields, files) {
