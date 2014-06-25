@@ -3,7 +3,8 @@ var index      = require('./routes/index')
   , admin      = require('./routes/admin')
   , user       = require('./routes/user')
   , art        = require('./routes/post')
-  , upload	   = require('./routes/upload');
+  , upload	   = require('./routes/upload')
+  , cat		   = require('./routes/cat');
 
 module.exports = function(app){
 	
@@ -19,11 +20,17 @@ module.exports = function(app){
 	app.get('/admin/deluser/:id',user.deluser);
 	app.get('/admin/edituser/:id',user.edituser);
 	app.post('/admin/updateuser/:id',user.updateuser);
+		//cat
+	app.get('/admin/cat', cat.cat);
+	app.post('/admin/addcat',cat.addcat);
+	app.get('/admin/delcat/:id',cat.delcat);
+	app.get('/admin/editcat/:id',cat.editcat);
+	app.post('/admin/updatecat/:id',cat.updatecat);
 		//article
 	app.get('/admin/post', art.post);
-	app.get('/admin/newPost', art.newPost);
-	//app.post('/admin/addarticle',article.addarticle);
-	//app.get('/admin/delarticle/:id',article.delarticle);
+	app.get('/admin/newpost', art.newpost);
+	app.post('/admin/addpost', art.newpost);
+	app.get('/admin/delpost/:id', art.delpost);
 	//app.get('/admin/editarticle/:id',article.editarticle);
 	//app.post('/admin/updatearticle/:id',admin.updatearticle);
 

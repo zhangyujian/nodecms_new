@@ -5,17 +5,27 @@
 	$(function(){
 		$("#content").keyup(function(){
 			var html = $(this).val();
-			console.log(html);
 			$(".docs-markdown-view").html(Markdown(html));
+		});
+
+		$(".J_choose_pic").click(function(){
+			var address = $(this).attr("data-address");
+			var html = '![图片](/upload/img/'+address+')';
+			var content = $("#content").val();
+			$("#content").val(content+"\n"+html);
 		});
 	});
 </script>
+<style>
+    .th_img{ width: 50px; }
+</style>
 <div class="container docs-container">
 	<div class="row">
 		<%= include common/side.html %>
-		<div class="col-md-8">
-			<h2>添加新文章</h2>
-			<form action="/admin/adduser" method="post" accept-charset="utf-8">
+		<form action="/admin/addpost" method="post" accept-charset="utf-8">
+			<div class="col-md-8">
+				<h2>添加新文章</h2>
+				
 				<div class="form-group">
 					<input type="text" class="form-control" id="title" name="title" placeholder="在此处输入标题" required="required">
 				</div>
@@ -25,58 +35,55 @@
 				<div class="form-group">
 					<textarea name="content" class="form-control" id="content" style="min-height: 300px;">请使用markdown语法书写正文</textarea>
 				</div>
-			</form>
-			<div class="panel panel-default">
-				<div class="panel-heading">实时预览</div>
-				<div class="panel-body docs-markdown-view">
-					
+				
+				<div class="panel panel-default">
+					<div class="panel-heading">实时预览</div>
+					<div class="panel-body docs-markdown-view">
+						
+					</div>
 				</div>
 			</div>
-		</div>
 
-		<div class="col-md-2 docs-side-bar">
-			<div class="panel panel-default">
-				<div class="panel-heading">发布</div>
-				<div class="panel-body">
-					
-					<div>
-						<label>
-							公开：
-						</label>
-						<label>
-							<input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
-							是
-						</label>
-						<label>
-							<input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
-							否
-						</label>
+			<div class="col-md-2 docs-side-bar">
+				<div class="panel panel-default">
+					<div class="panel-heading">发布</div>
+					<div class="panel-body">
+						
+						<div>
+							<label>
+								公开：
+							</label>
+							<label>
+								<input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
+								是
+							</label>
+							<label>
+								<input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
+								否
+							</label>
+						</div>
+						
 					</div>
-					
-				</div>
-				<div class="panel-footer docs-panel-footer">
-					<button type="button" class="btn btn-default">保存草稿</button>
-					<button type="submit" class="btn btn-primary">发布</button>
-				</div>
-			</div>
-			<div class="panel panel-default">
-				<div class="panel-heading">分类</div>
-				<div class="panel-body">
-					<div class="checkbox">
-						<label>
-							<input type="checkbox" value="">
-							分类1
-						</label>
+					<div class="panel-footer docs-panel-footer">
+						<button type="button" class="btn btn-default">保存草稿</button>
+						<button type="submit" class="btn btn-primary">发布</button>
 					</div>
-					<div class="checkbox">
-						<label>
-							<input type="checkbox" value="">
-							分类2
-						</label>
+				</div>
+				<div class="panel panel-default">
+					<div class="panel-heading">分类</div>
+					<div class="panel-body">
+						<% tables.forEach( function( table ){ %>
+							<div class="checkbox">
+								<label>
+									<input name="cid" type="radio" value="<%= table.id %>">
+									<%= table.name %>
+								</label>
+							</div>
+						<% }); %>
 					</div>
 				</div>
 			</div>
-		</div>
+		</form>
 
 	</div>
 </div>
@@ -91,16 +98,18 @@
 				<table class="table table-bordered table-hover">
 					<tr>
 						<th>缩略图</th>
-						<th>名称</th>
+						<th class="J_pic">名称</th>
 						<th width="50">操作</th>
 					</tr>
-					<tr>
-						<td></td>
-						<td></td>
-						<td>
-							<a href="###" class="btn btn-primary btn-xs">选择</a>
-						</td>
-					</tr>
+					<% imgs.forEach( function( img ){ %>
+						<tr>
+							<td><img class="th_img" src="/upload/img/<%= img %>" /></td>
+							<td><%= img %></td>
+							<td>
+								<a href="###" data-address="<%= img %>" class="J_choose_pic btn btn-primary btn-xs">选择</a>
+							</td>
+						</tr>
+					<% }); %>
 				</table>
 			</div>
 			<!--div class="modal-footer">

@@ -3,6 +3,7 @@ var mysql         = require('mysql')
   , md5           = require('./common').md5
   , session       = require('./common').session
   , bc            = require('buffer-concat')
+  , fs            = require('fs')
   , markdown      = require('markdown').markdown;
 
 var connection = mysql.createConnection({
@@ -35,27 +36,68 @@ exports.post = function(req, res){
     });
 };
 
-exports.newPost = function(req, res){
+exports.newpost = function(req, res){
     session(req, res, function(){
         if( req.method === 'GET' ){
-            res.render('admin/newPost', {
-                title: "添加新文章",
-                user: req.session.user,
-                message: req.flash('message')
-            });
+            connection.query(
+                'SELECT * FROM cat order by id desc',
+                function selectCb(err, results, fields) {
+                    if (err) {
+                        throw err;
+                    }
+
+                    fs.readdir('./public/upload/img/', function(err,data){
+                        if(err){
+                            console.error(err);
+                        }else{
+                            var arr = [];
+                            for (var i = 0; i < data.length; i++) {
+                                arr.push(data[i]);
+                            }
+                            res.render('admin/newPost', {
+                                title: "添加新文章",
+                                user: req.session.user,
+                                tables:results,
+                                imgs: arr,
+                                message: req.flash('message')
+                            });
+                        }
+                    });
+
+                }
+            );
         }
         else if( req.method === 'POST' ){
-            var sql = "INSERT INTO post SET email=?, username=?, password=?",
-                values = [ req.body.email, req.body.username, md5(req.body.password)];
+            var date = new Date;
+            var sql = "INSERT INTO posts SET title=?, author=?, date=?, content=?, cid=?",
+                values = [ req.body.title, req.session.user.username, date, req.body.content, req.body.cid];
             connection.query(sql, values, 
                 function(err, results){
                     if (err) {
                         throw err;
                     }
-                    req.flash('message','新用户添加成功！');
+                    req.flash('message','文章添加成功！');
                     res.redirect('/admin/post');
                 }
             );
         }
     });
 };
+
+//delete post
+exports.delpost = function(req, res){
+    session(req, res, function(){
+        var sql = "DELETE FROM posts WHERE id =?",
+            values = connection.escape(parseInt(req.params.id));
+        connection.query(sql, values, 
+            function selectCb(err, results) {
+                if (err) {
+                    console.log(err);
+                }
+                req.flash('message','删除成功');
+                res.redirect('/admin/post');
+            }
+        );
+        
+    });
+}

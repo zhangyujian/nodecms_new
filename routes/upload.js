@@ -22,7 +22,7 @@ connection.connect();
 exports.upload = function (req, res) {
     session(req, res, function(){
         if( req.method === 'GET' ){
-            fs.readdir('./public/upload/temp/', function(err,data){
+            fs.readdir('./public/upload/img/', function(err,data){
                 if(err){
                     console.error(err);
                 }else{
@@ -55,7 +55,7 @@ exports.upload = function (req, res) {
             ************************/
             
             var options = {
-                    uploadDir : "./public/upload/temp/",
+                    uploadDir : "./public/upload/img/",
                     keepExtensions : false,
                     maxFilesSize: 2*1024*1024
                 },

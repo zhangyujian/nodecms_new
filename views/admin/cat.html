@@ -1,0 +1,56 @@
+<%= include common/header.html %>
+<%= include common/nav.html %>
+<div class="container docs-container">
+	<div class="row">
+		<%= include common/side.html %>
+		<div class="col-md-10">
+			<div class="page-header docs-page-header">
+			  	<h2>分类管理</h2>
+			  	<a class="J_addBtn docs-page-header-add" href="javascript:;"><span class="glyphicon glyphicon-chevron-up"></span>添加</a>
+			</div>
+			<% if( message != "" ){ %>
+		    <div class="alert alert-warning alert-dismissable">
+		        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		        <strong><%= message %></strong>
+		    </div>
+		    <% } %>
+			<div class="J_addCon panel panel-default">
+				<div class="panel-body">
+					<form action="/admin/addcat" method="post" accept-charset="utf-8">
+						<div class="form-group">
+							<label for="name">分类名称</label>
+							<input type="name" class="form-control" id="name" name="name" placeholder="请输入分类名称" required="required">
+						</div>
+						<div class="form-group">
+							<label for="link">link</label>
+							<input type="link" class="form-control" id="link" name="link" placeholder="link">
+						</div>
+						<button type="submit" class="btn btn-default">添加</button>
+					</form>
+				</div>
+			</div>
+			<table class="table table-bordered table-hover">
+				<tr class="active">
+					<th width="50"></th>
+					<th width="50">ID</th>
+					<th>分类名称</th>
+					<th>link</th>
+					<th width="50">操作</th>
+				</tr>
+				<% tables.forEach( function( table ){ %>
+				    <tr>
+				    	<td><input type="checkbox" /></td>
+				    	<td><%= table.id %></td>
+				    	<td><%= table.name %></td>
+				    	<td><%= table.link  %></td>
+				    	<td>
+				    		<a href="/admin/editcat/<%= table.id  %>" title="编辑"><span class="glyphicon glyphicon-edit"></span></a>
+				    		<a href="/admin/delcat/<%= table.id  %>" title="删除"><span class="glyphicon glyphicon-remove"></span></a>
+				    	</td>
+				    </tr>
+				<% }); %>
+			</table>
+		</div>
+	</div>
+</div>
+<%= include common/footer.html %>
