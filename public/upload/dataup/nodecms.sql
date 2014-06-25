@@ -16,24 +16,43 @@ CREATE DATABASE /*!32312 IF NOT EXISTS*/`nodecms` /*!40100 DEFAULT CHARACTER SET
 
 USE `nodecms`;
 
+/*Table structure for table `cat` */
+
+DROP TABLE IF EXISTS `cat`;
+
+CREATE TABLE `cat` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(30) NOT NULL,
+  `pid` int(11) DEFAULT NULL,
+  `link` varchar(30) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+
+/*Data for the table `cat` */
+
+insert  into `cat`(`id`,`name`,`pid`,`link`) values (3,'新闻',NULL,'news'),(4,'微电影',NULL,'111'),(5,'媒体报道',NULL,'media');
+
 /*Table structure for table `posts` */
 
 DROP TABLE IF EXISTS `posts`;
 
 CREATE TABLE `posts` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `author` int(11) DEFAULT NULL,
+  `author` varchar(30) DEFAULT NULL,
   `date` datetime DEFAULT NULL,
-  `title` text NOT NULL,
+  `title` text,
   `content` longtext,
   `status` varchar(20) DEFAULT 'open',
   `modified` datetime DEFAULT NULL,
   `type` varchar(20) DEFAULT 'post',
   `order` int(11) DEFAULT NULL,
+  `cid` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 
 /*Data for the table `posts` */
+
+insert  into `posts`(`id`,`author`,`date`,`title`,`content`,`status`,`modified`,`type`,`order`,`cid`) values (10,'admin','2014-06-22 19:04:43','123123123123','请使用markdown语法书写正文','open',NULL,'post',NULL,4),(11,'admin','2014-06-22 19:04:52','玩玩儿玩儿玩儿','请使用markdown语法书写正文','open',NULL,'post',NULL,3),(12,'admin','2014-06-25 14:47:01','11111111111111','请使用markdown语法书写正文\r\n\r\n![图片](/upload/img/3232-si0tia.jpg)\r\n\r\n111111\r\n---------\r\n\r\n','open',NULL,'post',NULL,NULL);
 
 /*Table structure for table `sorts` */
 
