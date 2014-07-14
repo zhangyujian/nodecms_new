@@ -4,14 +4,18 @@ var index      = require('./routes/index')
   , user       = require('./routes/user')
   , art        = require('./routes/post')
   , upload	   = require('./routes/upload')
+  , data	   = require('./routes/data')
   , cat		   = require('./routes/cat');
 
 module.exports = function(app){
 	
 	// Routes
 	app.get('/', index.index);
-	app.get('/login.html', index.login);
-
+	app.get('/contact', index.contact);
+	app.get('/about', index.about);
+	app.get('/product', index.product);
+	app.get('/movie', index.movie);
+	app.get('/server', index.server);
 	// Admin Routes
 	app.get('/admin', admin.index);
 		//user
@@ -31,11 +35,18 @@ module.exports = function(app){
 	app.get('/admin/newpost', art.newpost);
 	app.post('/admin/addpost', art.newpost);
 	app.get('/admin/delpost/:id', art.delpost);
-	//app.get('/admin/editarticle/:id',article.editarticle);
+	app.get('/admin/editpost/:id',art.editpost);
+	app.post('/admin/updatepost/:id',art.updatepost);
 	//app.post('/admin/updatearticle/:id',admin.updatearticle);
 
+		//date
+	app.get('/admin/data',data.data);
+	app.post('/admin/export',data.export);
+
+		//upload
 	app.get('/admin/upload',upload.upload);
 	app.post('/admin/upload',upload.upload);
+	app.get('/admin/delimg/:name',upload.delimg);
 
 	//Admin Login Routes
 	app.get('/admin/login', admin.login);

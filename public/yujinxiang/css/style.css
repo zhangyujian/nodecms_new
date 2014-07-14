@@ -1,0 +1,110 @@
+body{ background: #100613; }
+.container{ max-width: 1000px; }
+.docs-container .navbar-brand{ padding: 10px 0; }
+.docs-container .nav{ margin-top: 10px; }
+.docs-container .nav a{ color: #ccc; }
+.docs-container .nav a:hover{ color: #999; background:none; }
+.slide{ max-width: 1400px; margin: 0 auto;}
+
+.index-a{ margin-top: 40px; }
+.index-a .col-md-4 h2{ color: #c2a8c3; text-align: center; }
+.index-a .col-md-4 p{ color: #c2a8c3; text-align: center; }
+.index-a .img-thumbnail{ background: #000; border: solid 1px #8004ba; }
+
+.index-b{ height: 200px; }
+.index-b a img{ border: 4px #00000a solid; }
+.index-b a:hover img{ border: 4px #2f011e solid; }
+.index-b h2{ color: #d3b6a8; }
+.index-b h2 small{ color: #3a172d; }
+
+.colum{ background: #10000a; }
+
+
+.side-colum h5{ margin-top: 20px; color: #905739; } 
+.side-colum h5 span{ margin-right: 10px; }
+.side-colum ul{ list-style: none; padding: 0; margin: 0; }
+.side-colum li a{ display: block; width: 100%; text-indent: 20px; height: 40px; 
+  border-bottom: solid 1px #260032; border-bottom: solid 1px #260032; color: #c9c9c9;
+  background: #200029; line-height: 40px; }
+.side-colum li a:hover{ border-right: solid 4px #6d3089; text-decoration: none;background: #2c0038; }
+
+.side-news h5{ margin-top: 20px; color: #905739; } 
+.side-news h5 span{ margin-right: 10px; }
+.side-news ul{ list-style: none; padding: 0; margin: 0; }
+.side-news ul li{ padding: 5px 0; border-bottom: solid 1px #250c2d; }
+.side-news li a{text-indent: 20px;color: #c9c9c9; line-height: 24px; font-size: 12px;}
+.side-news li a:hover{ text-decoration: none;color: #a15000;}
+.side-news li span{ display: block; font-size: 12px;}
+
+.side-main h1{ border-bottom: 4px solid #200029; color: #c2a8c3; font-size: 18px; text-align: center; line-height: 30px; }
+.side-main .bd{ padding: 10px;color: #c2a8c3; line-height: 24px;  }
+.side-main .row{ margin-top: 20px; }
+.side-main .row .col-md-6{ position: relative; }
+.side-main .row h6{ height: 20px; line-height: 20px; background: #ccc; position: absolute; bottom: 0px; text-indent: 20px; text-align: center; color: #c2a8c3; font-size: 14px; }
+.side-main .side-main-list{ list-style: none; padding: 0; margin: 0; }
+.side-main .side-main-list li{ line-height: 30px; }
+.side-main .side-main-list li a{ color: #c2a8c3; }
+.side-main .side-main-list li a span{ margin-right: 10px; }
+.side-main .side-main-list li .time{ float: right; color: #c2a8c3; }
+
+/* About
+-------------------------------------------------- */
+.about p{ text-indent: 30px; }
+
+/* Contact
+-------------------------------------------------- */
+.contact span{ margin-right: 10px; }
+.map{  }
+
+/* Media ICON
+-------------------------------------------------- */
+.icon-media{display: inline-block;margin: 2px;zoom: 1;vertical-align: top;background: url(../images/media.png) no-repeat;}
+.icon-media-weibo{ width: 50px; height: 50px; background-position: 0 0; }
+.icon-media-txweibo{ width: 50px; height: 50px; background-position: -50px 0; }
+.icon-media-qqzone{ width: 50px; height: 50px; background-position: -100px 0; }
+.icon-media-wechat{ width: 50px; height: 50px; background-position: -150px 0; }
+.icon-media-qq{ width: 50px; height: 50px; background-position: -200px 0; }
+.f_c a:hover .icon-media-weibo{ background-position: 0 -50px; }
+.f_c a:hover .icon-media-txweibo{ background-position: -50px -50px; }
+.f_c a:hover .icon-media-qqzone{ background-position: -100px -50px; }
+.f_c a:hover .icon-media-wechat{ background-position: -150px -50px; }
+.f_c a:hover .icon-media-qq{ background-position: -200px -50px; }
+/* Footer
+-------------------------------------------------- */
+.footer{
+height:80px;
+color: #888888;
+text-align: center;
+padding: 5px 0 10px 0;
+margin-top: 70px;
+background-color: #080808;}
+.footer a{ color: #888888; }
+.footer .bd{ width: 1000px; margin: 0 auto; }
+.footer .bd .f_a{ padding-top: 25px; }
+.footer .bd .f_b{ margin-left: 90px; }
+.footer .bd .f_c{ padding-top: 8px; }
+
+/* Sticky footer styles
+-------------------------------------------------- */
+
+html,
+body {
+  height: 100%;
+  /* The html and body elements cannot have any padding or margin. */
+}
+
+/* Wrapper for page content to push down footer */
+#wrap {
+  min-height: 100%;
+  height: auto;
+  /* Negative indent footer by its height */
+  margin: 0 auto -60px;
+  /* Pad bottom by footer height */
+  padding: 0 0 60px;
+}
+
+/* Set the fixed height of the footer here */
+#footer {
+  height: 60px;
+  background-color: #f5f5f5;
+}

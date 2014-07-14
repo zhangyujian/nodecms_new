@@ -1,5 +1,36 @@
 <%= include common/header.html %>
 <%= include common/nav.html %>
+<script src="/js/jquery.twbsPagination.js"></script>
+<script>
+$(function(){
+    var url = window.location.href.split("?page=");
+    var startPage = 1;
+    if(url.length != 1){
+        startPage = url[1];
+    }
+    var totalPages = <%= total/2 %>;
+    var totalPages = Math.ceil(totalPages);
+    
+    $('#pagination').twbsPagination({
+        totalPages: totalPages,
+        visiblePages: 7,
+        startPage:parseInt(startPage),
+        hrefVariable: 'number',
+        href: '?page=number',
+        first: "首页",
+        prev: "上一页",
+        next: "下一页",
+        last: "末页",
+        onPageClick: function (event, page) {
+            $("#pagination .page").each(function(){
+                $(this).removeClass("active");
+            });
+            $("#pagination .page:eq("+ (startPage-1) +")").addClass("active");
+        }
+    });
+});
+
+</script>
 <!--link href="/uploadify/uploadify.css" />
 <script src="/uploadify/jquery.uploadify.js"></script>
 <script>
@@ -39,6 +70,7 @@
             <table class="table table-bordered table-hover">
                 <tr class="active">
                     <th width="50"></th>
+                    <th>id</th>
                     <th>缩略图</th>
                     <th>名称</th>
                     <th width="50">操作</th>
@@ -46,16 +78,16 @@
                 <% tables.forEach( function( table ){ %>
                     <tr>
                         <td><input type="checkbox" /></td>
-                        <td><img class="th_img" src="/upload/img/<%= table %>" /></td>
-                        <td><%= table %></td>
+                        <td><%= table.id %></td>
+                        <td><img class="th_img" src="/upload/img/<%= table.oldname %>" /></td>
+                        <td><%= table.oldname %></td>
                         <td>
-                            <a href="/admin/edituser/<%= table  %>" title="编辑"><span class="glyphicon glyphicon-edit"></span></a>
-                            <a href="/admin/deluser/<%= table  %>" title="删除"><span class="glyphicon glyphicon-remove"></span></a>
+                            <a href="/admin/delimg/<%= table %>" title="删除"><span class="glyphicon glyphicon-remove"></span></a>
                         </td>
                     </tr>
                 <% }); %>
             </table>
-            
+            <ul id="pagination" class="pagination-sm"></ul>
         </div>
     </div>
 </div>

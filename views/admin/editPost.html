@@ -1,34 +1,144 @@
 <%= include common/header.html %>
 <%= include common/nav.html %>
+<script src="/js/markdown.js"></script>
+<script>
+	$(function(){
+		$("#content").keyup(function(){
+			var html = $(this).val();
+			$(".docs-markdown-view").html(Markdown(html));
+		});
+
+		$(".J_choose_pic").click(function(){
+			var address = $(this).attr("data-address");
+			var html = '![图片](/upload/img/'+address+')';
+			var content = $("#content").val();
+			$("#content").val(content+"\n"+html);
+		});
+
+		$(".J_choose_feature").click(function(){
+			var address = $(this).attr("data-address");
+			$(".J_feature_pic").attr("src","/upload/img/"+address);
+			$(".J_feature_input").val("/upload/img/"+address);
+		});
+
+	});
+</script>
+<style>
+    .th_img{ width: 50px; }
+</style>
 <div class="container docs-container">
 	<div class="row">
 		<%= include common/side.html %>
-		<div class="col-md-10">
-			<div class="page-header docs-page-header">
-			  	<h2>编辑用户</h2>
+		<form action="/admin/updatepost/<%= post.id  %>" method="post" accept-charset="utf-8">
+			<div class="col-md-8">
+				<h2>编辑文章</h2>
+				
+				<div class="form-group">
+					<input type="text" class="form-control" id="title" name="title" placeholder="在此处输入标题" value="<%= post.title %>" required="required">
+				</div>
+				<div class="form-group">
+					<button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#myModal"> 插入图片 </button>
+				</div>
+				<div class="form-group">
+					<textarea name="content" class="form-control" id="content" style="min-height: 300px;"><%= post.content %></textarea>
+				</div>
+				
+				<div class="panel panel-default">
+					<div class="panel-heading">实时预览</div>
+					<div class="panel-body docs-markdown-view">
+						
+					</div>
+				</div>
 			</div>
-			<% if( message != "" ){ %>
-		    <div class="alert alert-warning alert-dismissable">
-		        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-		        <strong><%= message %></strong>
-		    </div>
-		    <% } %>
-			<form action="/admin/updateuser/<%= table.id  %>" method="post" accept-charset="utf-8">
-				<div class="form-group">
-					<label for="email">请输入邮箱</label>
-					<input type="email" class="form-control" id="email" name="email" value="<%= table.email  %>" required="required">
+
+			<div class="col-md-2 docs-side-bar">
+				<div class="panel panel-default">
+					<div class="panel-heading">发布</div>
+					<div class="panel-body">
+						
+						<div>
+							<label>
+								公开：
+							</label>
+							<label>
+								<input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
+								是
+							</label>
+							<label>
+								<input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
+								否
+							</label>
+						</div>
+						
+					</div>
+					<div class="panel-footer docs-panel-footer">
+						<!--button type="button" class="btn btn-default">保存草稿</button-->
+						<button type="submit" class="btn btn-primary">发布</button>
+					</div>
 				</div>
-				<div class="form-group">
-					<label for="username">请输入用户名</label>
-					<input type="username" class="form-control" id="username" name="username" value="<%= table.username  %>" required="required">
+
+				<div class="panel panel-default">
+					<div class="panel-heading">分类</div>
+					<div class="panel-body">
+						<% cats.forEach( function( cat ){ %>
+							<div class="checkbox">
+								<label>
+									<% if( cat.id == post.cid ){ %>
+								    <input name="cid" type="radio" value="<%= cat.id %>" checked>
+									<% }else{ %>
+								    <input name="cid" type="radio" value="<%= cat.id %>">
+								    <% } %>
+									<%= cat.name %>
+								</label>
+							</div>
+						<% }); %>
+					</div>
 				</div>
-				<div class="form-group">
-					<label for="password">请输入密码</label>
-					<input type="password" class="form-control" id="password" name="password" required="required" placeholder="请输入新密码">
+
+				<div class="panel panel-default">
+					<div class="panel-heading">特色图片</div>
+					<div class="panel-body">
+						<img width="200px" class="J_feature_pic" src="<%= post.feature %>" />
+						<input style="display:none;" type="text" name="feature" class="J_feature_input" value="<%= post.feature %>" />
+					</div>
 				</div>
-				<button type="submit" class="btn btn-default">保存</button>
-			</form>
-		</div>
+
+			</div>
+		</form>
+
 	</div>
+</div>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title" id="myModalLabel">插入图片<h4>
+			</div>
+			<div class="modal-body">
+				<table class="table table-bordered table-hover">
+					<tr>
+						<th>缩略图</th>
+						<th class="J_pic">名称</th>
+						<th width="50">操作</th>
+					</tr>
+					<% imgs.forEach( function( img ){ %>
+						<tr>
+							<td><img class="th_img" src="/upload/img/<%= img.oldname %>" /></td>
+							<td><%= img.oldname %></td>
+							<td>
+								<a href="###" data-address="<%= img %>" class="J_choose_feature btn btn-warning btn-xs">设为特色</a>
+								<a href="###" data-address="<%= img %>" class="J_choose_pic btn btn-primary btn-xs">插入正文</a>
+							</td>
+						</tr>
+					<% }); %>
+				</table>
+			</div>
+			<!--div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+				<button type="button" class="btn btn-primary">确定</button>
+			</div-->
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
 </div>
 <%= include common/footer.html %>

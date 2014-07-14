@@ -1,10 +1,21 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='http://www.xiangshang360.com/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1>哈哈！这是一个<%= title %>页面</h1>
-  </body>
-</html>
+<%= include common/header.html %>
+<!--==============================content=================================-->
+<div id="content">
+    <!--==============================row10=================================-->
+    <div class="row_10">
+        <div class="container">
+          <div class="row block-404">
+            <div class="col-lg-7 col-md-7 col-sm-7">
+                <figure class="img-polaroid"><img src="yujinxiang/img/404.jpg" alt=""></figure>
+            </div>
+            <div class="col-lg-3 col-md-5 col-sm-5 forminfo">
+                <div>
+                    <h2 class="title404_1">Sorry!</h2>
+                    <p>页面不存在</p>
+                </div>
+            </div>  
+          </div> 
+        </div>
+    </div>
+</div>
+<%= include common/footer.html %>
