@@ -81,7 +81,7 @@ exports.edituser = function(req, res){
                 if (err) {
                     console.log(err);
                 }
-                res.render('admin/edituser', {
+                res.render('admin/editUser', {
                     title: "编辑用户",
                     table: results[0],
                     user: req.session.user,

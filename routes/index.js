@@ -6,7 +6,7 @@ var mysql         = require('mysql')
   , bc            = require('buffer-concat');
 
 exports.index = function(req, res){
-	connection.query('USE '+TEST_DATABASE);
+	//connection.query('USE '+TEST_DATABASE);
 	connection.query(
 	  'SELECT * FROM user',
 	  function selectCb(err, results, fields) {
